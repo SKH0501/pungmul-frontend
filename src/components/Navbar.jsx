@@ -19,6 +19,8 @@ function Navbar() {
         <Link to="/" className="text-lg font-bold">풍물 커뮤니티</Link>
         <Link to="/performances" className="text-sm text-gray-600 hover:text-black">공연</Link>
         <Link to="/clubs" className="text-sm text-gray-600 hover:text-black">동아리</Link>
+        <Link to="/training" className="text-sm text-gray-600 hover:text-black">트레이닝</Link>
+
       </div>
       <div>
         {token ? (

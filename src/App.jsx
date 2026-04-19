@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage'
 import Navbar from './components/Navbar'
 import ClubPage from './pages/ClubPage'
 import ClubDetailPage from './pages/ClubDetailPage'
+import TrainingPage from './pages/TrainingPage'
 
 import PerformanceDetailPage from './pages/PerformanceDetailPage'
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/clubs" element={<ClubPage />} />
         <Route path="/clubs/:id" element={<ClubDetailPage />} />
         <Route path="/oauth/callback" element={<OAuthCallback />} />
+        <Route path="/training" element={<TrainingPage />} />
 
       </Routes>
     </BrowserRouter>
