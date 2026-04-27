@@ -7,6 +7,7 @@ import ClubPage from './pages/ClubPage'
 import ClubDetailPage from './pages/ClubDetailPage'
 import TrainingPage from './pages/TrainingPage'
 import TrainingSessionPage from './pages/TrainingSessionPage'
+import ClubEditPage from './pages/ClubEditPage'
 
 import PerformanceDetailPage from './pages/PerformanceDetailPage'
 
@@ -24,6 +25,7 @@ function App() {
         <Route path="/oauth/callback" element={<OAuthCallback />} />
         <Route path="/training" element={<TrainingPage />} />
         <Route path="/training/:id" element={<TrainingSessionPage />} />
+        <Route path="/clubs/:id/edit" element={<ClubEditPage />} />
 
       </Routes>
     </BrowserRouter>

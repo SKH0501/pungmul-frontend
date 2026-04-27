@@ -6,6 +6,7 @@ function ClubDetailPage() {
   const { id } = useParams()
   const navigate = useNavigate()
   const [club, setClub] = useState(null)
+  const user = JSON.parse(localStorage.getItem('user'))  // 추가!
 
   useEffect(() => {
     api.get(`/api/clubs/${id}`)
@@ -15,10 +16,22 @@ function ClubDetailPage() {
 
   if (!club) return <div className="p-6">로딩중...</div>
 
+  const isMaster = user && user.id === club.masterId  // 추가!
+
   const typeLabel = {
     CENTRAL: '중앙동아리',
     DEPARTMENT: '학회',
     SOCIAL: '사회패'
+  }
+
+  const handleDelete = async () => {
+    if (!window.confirm('정말 삭제할까요?')) return
+    try {
+      await api.delete(`/api/clubs/${id}`)
+      navigate('/clubs')
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (
@@ -31,10 +44,22 @@ function ClubDetailPage() {
 
       <div className="border rounded-lg p-6">
         <div className="flex items-center gap-4 mb-4">
-          <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center font-bold text-green-700 text-xl">
-            {club.name.slice(0, 2)}
-          </div>
-          <div>
+          
+          
+          {club.profileImage ? (
+  <img
+    src={club.profileImage}
+    alt="프로필"
+    className="w-16 h-16 rounded-full object-cover"
+  />
+) : (
+  <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center font-bold text-green-700 text-xl">
+    {club.name.slice(0, 2)}
+  </div>
+)}
+          
+
+          <div className="flex-1">
             <div className="flex items-center gap-2">
               <h1 className="text-2xl font-bold">{club.name}</h1>
               <span className="text-xs px-2 py-1 bg-purple-100 text-purple-700 rounded-full">
@@ -43,6 +68,22 @@ function ClubDetailPage() {
             </div>
             <p className="text-gray-500">{club.location}</p>
           </div>
+
+          {/* 대표자만 수정/삭제 버튼 표시! */}
+          {isMaster && (
+            <div className="flex gap-2">
+              <button
+                onClick={() => navigate(`/clubs/${id}/edit`)}
+                className="px-3 py-1 bg-blue-500 text-white text-sm rounded-lg hover:bg-blue-600">
+                수정
+              </button>
+              <button
+                onClick={handleDelete}
+                className="px-3 py-1 bg-red-500 text-white text-sm rounded-lg hover:bg-red-600">
+                삭제
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="border-t pt-4 space-y-2">

@@ -10,11 +10,24 @@ function OAuthCallback() {
 
     if (token) {
       localStorage.setItem('token', token)
-      navigate('/')
+
+      // 유저 정보 가져와서 저장
+      fetch(`${import.meta.env.VITE_API_BASE_URL}/api/me`, {
+
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then(res => res.json())
+        .then(user => {
+          localStorage.setItem('user', JSON.stringify(user))
+          navigate('/')
+        })
+        .catch(() => navigate('/'))
     }
   }, [])
 
-  return <div>로그인 처리중...</div>
+  return <div className="p-6">로그인 처리중...</div>
 }
 
 export default OAuthCallback

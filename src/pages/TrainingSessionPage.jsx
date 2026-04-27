@@ -131,7 +131,7 @@ function TrainingSessionPage() {
     const transitionTimes = transitions.map(t => t.time).join(',')
     formData.append('transitions', transitionTimes)
     try {
-      const res = await fetch('http://localhost:8000/analyze', {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/upload`, {
         method: 'POST',
         body: formData,
       })
