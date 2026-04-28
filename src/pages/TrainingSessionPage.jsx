@@ -131,7 +131,7 @@ function TrainingSessionPage() {
     const transitionTimes = transitions.map(t => t.time).join(',')
     formData.append('transitions', transitionTimes)
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/upload`, {
+      const res = await fetch(`${import.meta.env.VITE_AI_URL}/analyze`, {// ✅ 수정
         method: 'POST',
         body: formData,
       })
