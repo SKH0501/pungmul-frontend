@@ -16,6 +16,30 @@ function ClubNewPage() {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
+  // ✅ 이미지 선택 시 미리보기
+  const handleImageChange = (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+    setProfileImage(file)
+    setPreviewUrl(URL.createObjectURL(file))
+  }
+
+  // ✅ S3 업로드
+  const uploadImage = async () => {
+    if (!profileImage) return null
+    const formData = new FormData()
+    formData.append('file', profileImage)
+    const res = await fetch('/upload', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    return await res.text()
+  }
+
+
   const handleSubmit = async () => {
     if (!form.name.trim()) return alert('동아리 이름을 입력해주세요!')
     if (!form.location.trim()) return alert('학교/지역을 입력해주세요!')
@@ -82,7 +106,7 @@ function ClubNewPage() {
 
         <button onClick={handleSubmit}
           className="w-full py-3 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600">
-          동아리 만들기 🥁
+          동아리 만들기 
         </button>
       </div>
     </div>
