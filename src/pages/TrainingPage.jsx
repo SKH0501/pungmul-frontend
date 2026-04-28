@@ -14,7 +14,7 @@ function TrainingPage() {
 
   return (
     <div className="p-6 max-w-3xl mx-auto">
-      <h2 className="text-xl font-bold mb-2">장구 트레이닝 with [서울대학교 단풍연]</h2>
+      <h2 className="text-base font-bold mb-2">장구 트레이닝 with [서울대학교 단풍연]</h2>
       <p className="text-gray-500 text-sm mb-6">
         가락을 선택하고 영상을 보면서 따라쳐봐요!
       </p>
