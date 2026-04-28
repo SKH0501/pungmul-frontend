@@ -5,6 +5,7 @@ import api from '../api/axios'
 function ClubPage() {
   const [clubs, setClubs] = useState([])
   const navigate = useNavigate()
+  const user = JSON.parse(localStorage.getItem('user'))  // ✅ 추가
 
   useEffect(() => {
     api.get('/api/clubs')
@@ -26,7 +27,24 @@ function ClubPage() {
 
   return (
     <div className="p-6 max-w-3xl mx-auto">
-      <h2 className="text-xl font-bold mb-4">동아리 목록</h2>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-bold">동아리 목록</h2>
+        {/* ✅ 로그인한 사람만 만들기 버튼 보임 */}
+        {user && (
+          <button
+            onClick={() => navigate('/clubs/new')}
+            className="text-sm px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+            + 동아리 만들기
+          </button>
+        )}
+      </div>
+
+      {clubs.length === 0 && (
+        <p className="text-gray-400 text-sm text-center py-12">
+          아직 등록된 동아리가 없어요
+        </p>
+      )}
+
       {clubs.map(c => (
         <div
           key={c.id}
