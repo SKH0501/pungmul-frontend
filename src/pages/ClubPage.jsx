@@ -51,9 +51,19 @@ function ClubPage() {
           className="border rounded-lg p-4 mb-3 cursor-pointer hover:bg-gray-50 flex items-center gap-4"
           onClick={() => navigate(`/clubs/${c.id}`)}
         >
-          <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center font-bold text-green-700 flex-shrink-0">
-            {c.name.slice(0, 2)}
-          </div>
+          {c.profileImage ? (
+  <img
+    src={c.profileImage}
+    alt="프로필"
+    className="w-12 h-12 rounded-full object-cover flex-shrink-0"
+  />
+) : (
+  <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center font-bold text-green-700 flex-shrink-0">
+    {c.name.slice(0, 2)}
+  </div>
+)}
+
+
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
               <h3 className="font-bold">{c.name}</h3>
