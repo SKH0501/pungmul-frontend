@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import api from '../api/axios'
+import { useS3Upload } from '../hooks/useS3Upload'  // ✅ 추가
 
 function ClubNewPage() {
   const navigate = useNavigate()
+  const { uploadFile, uploading } = useS3Upload()  // ✅ 추가
   const [form, setForm] = useState({
     name: '',
     location: '',
@@ -11,35 +13,19 @@ function ClubNewPage() {
     clubType: 'CENTRAL',
     foundedAt: ''
   })
-  const [profileImage, setProfileImage] = useState(null)
+  const [imageFile, setImageFile] = useState(null)
   const [previewUrl, setPreviewUrl] = useState(null)
-  const [uploading, setUploading] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
-  // ✅ 이미지 선택 시 미리보기
   const handleImageChange = (e) => {
     const file = e.target.files[0]
     if (!file) return
-    setProfileImage(file)
+    setImageFile(file)
     setPreviewUrl(URL.createObjectURL(file))
-  }
-
-  // ✅ S3 업로드
-  const uploadImage = async () => {
-    if (!profileImage) return null
-    const formData = new FormData()
-    formData.append('file', profileImage)
-    const res = await fetch('/upload', {
-      method: 'POST',
-      body: formData,
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    })
-    return await res.text()
   }
 
   const handleSubmit = async () => {
@@ -47,8 +33,10 @@ function ClubNewPage() {
     if (!form.location.trim()) return alert('학교/지역을 입력해주세요!')
 
     try {
-      setUploading(true)
-      const imageUrl = await uploadImage()
+      setSubmitting(true)
+
+      // ✅ S3 업로드
+      const imageUrl = await uploadFile(imageFile)
 
       await api.post('/api/clubs', {
         ...form,
@@ -60,7 +48,7 @@ function ClubNewPage() {
     } catch (err) {
       alert(err.response?.data || '동아리 생성 실패')
     } finally {
-      setUploading(false)
+      setSubmitting(false)
     }
   }
 
@@ -74,8 +62,7 @@ function ClubNewPage() {
       <h2 className="text-xl font-bold mb-6">동아리 만들기</h2>
 
       <div className="space-y-4">
-
-        {/* ✅ 이미지 업로드 */}
+        {/* 이미지 업로드 */}
         <div className="flex flex-col items-center gap-2">
           <div
             onClick={() => document.getElementById('imageInput').click()}
@@ -90,7 +77,7 @@ function ClubNewPage() {
           <input
             id="imageInput"
             type="file"
-            accept="image/*"
+            accept="image/jpeg,image/png,image/webp"
             onChange={handleImageChange}
             className="hidden"
           />
@@ -134,9 +121,9 @@ function ClubNewPage() {
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
         </div>
 
-        <button onClick={handleSubmit} disabled={uploading}
+        <button onClick={handleSubmit} disabled={uploading || submitting}
           className="w-full py-3 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 disabled:opacity-50">
-          {uploading ? '업로드 중...' : '동아리 만들기 '}
+          {uploading ? '이미지 업로드 중...' : submitting ? '생성 중...' : '동아리 만들기 🥁'}
         </button>
       </div>
     </div>
