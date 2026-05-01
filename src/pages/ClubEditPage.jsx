@@ -45,13 +45,13 @@ function ClubEditPage() {
     formData.append('file', file)
 
     try {
-      const res = await fetch('/upload', {
-  method: 'POST',
-  body: formData,
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem('token')}`
-  }
-})
+      const res = await fetch('/upload', {  // ✅ 수정!
+        method: 'POST',
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      })
       const url = await res.text()
       setForm(prev => ({ ...prev, profileImage: url }))
     } catch (err) {
