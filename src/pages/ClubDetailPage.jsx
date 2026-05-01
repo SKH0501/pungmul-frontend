@@ -114,6 +114,7 @@ function ClubDetailPage() {
         <div className="flex flex-col sm:flex-row items-start gap-4 mb-4">
           {club.profileImage ? (
             <img src={club.profileImage} alt="프로필"
+              referrerPolicy="no-referrer"
               className="w-16 h-16 rounded-full object-cover flex-shrink-0" />
           ) : (
             <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center font-bold text-green-700 text-xl flex-shrink-0">

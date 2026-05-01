@@ -90,6 +90,7 @@ function ClubPage() {
         >
           {c.profileImage ? (
             <img src={c.profileImage} alt="프로필"
+              referrerPolicy="no-referrer"
               className="w-12 h-12 rounded-full object-cover flex-shrink-0" />
           ) : (
             <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center font-bold text-green-700 flex-shrink-0">
@@ -103,6 +104,7 @@ function ClubPage() {
                 {typeLabel[c.clubType]}
               </span>
             </div>
+          
             <p className="text-sm text-gray-500 truncate">{c.location}</p>
             <p className="text-sm text-gray-500">대표: {c.masterName}</p>
           </div>
