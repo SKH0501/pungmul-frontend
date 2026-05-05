@@ -10,6 +10,7 @@ import TrainingSessionPage from './pages/TrainingSessionPage'
 import ClubEditPage from './pages/ClubEditPage'
 import OnboardingPage from './pages/OnboardingPage'
 import ClubNewPage from './pages/ClubNewPage'
+import PerformanceNewPage from './pages/PerformanceNewPage'
 
 import PerformanceDetailPage from './pages/PerformanceDetailPage'
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="/clubs/:id/edit" element={<ClubEditPage />} />
         <Route path="/onboarding" element={<OnboardingPage />} />
         <Route path="/clubs/new" element={<ClubNewPage />} />
+        <Route path="/performances/new" element={<PerformanceNewPage />} />
 
       </Routes>
     </BrowserRouter>
