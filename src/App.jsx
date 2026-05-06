@@ -11,6 +11,7 @@ import ClubEditPage from './pages/ClubEditPage'
 import OnboardingPage from './pages/OnboardingPage'
 import ClubNewPage from './pages/ClubNewPage'
 import PerformanceNewPage from './pages/PerformanceNewPage'
+import PerformanceEditPage from './pages/PerformanceEditPage'
 
 import PerformanceDetailPage from './pages/PerformanceDetailPage'
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="/onboarding" element={<OnboardingPage />} />
         <Route path="/clubs/new" element={<ClubNewPage />} />
         <Route path="/performances/new" element={<PerformanceNewPage />} />
+        <Route path="/performances/:id/edit" element={<PerformanceEditPage />} />
 
       </Routes>
     </BrowserRouter>
